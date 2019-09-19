@@ -1,0 +1,52 @@
+{% extends "_layout.html" %}
+{% block title %}ebridge IBM QRadar SIEM App{% endblock %}
+{% block content %}
+
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Flask APIs</h3>
+            </div>
+            <div class="panel-body">
+                Dozens of <i>ready-to-deploy</i> Flask apps make it easy to get your organization's IBM QRadar SIEM environment setup and deployed with little effort.
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">SQLAlchemy Backend</h3>
+            </div>
+            <div class="panel-body">
+                The de-facto standard in Python Database development.  Flask APIs are supported by a variety of Alchemy dialects. MySQL, SQLite3, Postgres and more...
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">IBM QRadar</h3>
+            </div>
+            <div class="panel-body">
+                IBM QRadar is an enterprise security information and event management product. QRadar performs real-time analysis minimizing damage and cost.
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">SIEM</h3>
+            </div>
+            <div class="panel-body">
+                Security information and event management is an approach to security management that combines SIM &amp; SEM functions into a single management system. 
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="text-center text-primary">{{ today }}</div>
+    </div>
+    
+
+    {% endblock %}
