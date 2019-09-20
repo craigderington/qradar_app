@@ -25,9 +25,9 @@
                 </div>
                 <div class="navbar-collapse collapse" id="navbar-main">
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ url_for('index') }}"><i class="fa fa-flask"></i> Flask</a></li>
+                        <li {% if 'index' in request.path %}class="active"{% endif %}><a href="{{ url_for('index') }}"><i class="fa fa-flask"></i> Flask</a></li>
                         <li><a href=""><i class="fa fa-th-list"></i> QRadar </a></li>
-                        <li><a href=""><i class="fa fa-database"></i> SQLAlchemy</a></li>
+                        <li {% if 'nmap' in request.path %}class="active"{% endif %}><a href="{{ url_for('nmap') }}"><i class="fa fa-database"></i> Scan Network</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">                                              
                         {% if "token" in request.cookies %}
@@ -41,7 +41,7 @@
         </div>        
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-            <div class="container">
+            <div class="container" style="margin-top:40px;">
                 {% for category, message in messages %}
                   <div class="alert alert-{{ category }} alert-dismissible" style="margin-top:15px;">
                       <button type="button" class="close" data-dismiss="alert">&times;</button>
