@@ -38,23 +38,23 @@
                     </ul>
                 </div>
             </div>
-        </div>        
+        </div>
+
+        
+        <div class="container" style="padding-top:50px;">            
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            <div class="container" style="margin-top:40px;">
+            {% if messages %}            
                 {% for category, message in messages %}
-                  <div class="alert alert-{{ category }} alert-dismissible" style="margin-top:15px;">
-                      <button type="button" class="close" data-dismiss="alert">&times;</button>
-                      <p><i class="fa fa-info-circle"></i> {{ message }}</p>
-                 </div>
-                {% endfor %}
-            </div>
+                    <div class="alert alert-{{ category }} alert-dismissible" style="margin-top:15px;">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <p><i class="fa fa-info-circle"></i> {{ message }}</p>
+                    </div>
+                {% endfor %}            
             {% endif %}
         {% endwith %}
 
-        <div class="container">
-            <div class="page-header" id="banner">
-                <div class="row" style="padding-top:40px;">
+            <div class="page-header" id="banner">                
+                <div class="row">                
                     {% if "index" in request.path %}{% include 'jumbotron.html' %}{% endif %}
                     <div class="col-lg-12">
                         {% block content %}

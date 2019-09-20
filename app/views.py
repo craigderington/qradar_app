@@ -25,9 +25,9 @@ def nmap():
     ip = None
 
     if request.method == "POST":
-        ip = request.args.get("ip_network", default="10.0.1.0/24")
+        ip = request.form["ip_network"]
         try:
-            cidr = ipaddress.IPv4Network(unicode(ip, "utf-8"))
+            cidr = ipaddress.IPv4Network(ip)
             
             # set hosts to our network scan response
             hosts = scan_network(cidr)

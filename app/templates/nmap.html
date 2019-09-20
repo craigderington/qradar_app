@@ -1,21 +1,29 @@
 {% extends "_layout.html" %}
 {% block content %}
-<div class="col-lg-6">
+<div class="col-lg-8">
     <form method="POST" action="{{ url_for('nmap') }}">
         <fieldset>
-            <ledend>nmap scan</ledend>              
+            <ledend class="badge badge-primary" style="padding:10px;">nmap scan</ledend>
+            <hr class="text-primary" />              
             <div class="form-group">
                 <label class="col-form-label col-form-label-lg" for="inputLarge">IP Range:</label>
                 <input class="form-control form-control-lg" 
                        type="text" 
                        name="ip_network" 
                        placeholder="Enter IPv4 Network" 
-                       id="inputLarge"
+                       id="ip_network"
                        value="{% if request.form %}{{ request.form.get('ip_network') }}{% endif %}">
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Scan Now</button>
-            </div>
+            {% if not request.form %}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Scan Now</button>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <a href="{{ url_for('nmap') }}" class="btn btn-sm btn-primary">Reset</a>
+                </div>
+            {% endif %}
+
         </fieldset>      
     </form>
     {% if request.form %}
