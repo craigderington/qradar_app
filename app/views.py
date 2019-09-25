@@ -32,17 +32,12 @@ def nmap():
     total_hosts = 0
     hosts = None
     ip = None
-    scan_types = {
-        "Fast Scan": 1, 
-        "Aggressive Scan": 2, 
-        "Multi-Port Scan": 3, 
-        "Service Version Scan": 4,
-        "OS Version Scan": 5, 
-        "Vulnerability Scan": 6
-    }
+    scan_type = None
 
     if request.method == "POST":
         ip = request.form["ip_network"]
+        scan_type = request.form["scan_type"]
+
         try:
             cidr = ipaddress.IPv4Network(ip)
             
@@ -61,7 +56,7 @@ def nmap():
         ip=ip,
         hosts=hosts,
         total_hosts=int(total_hosts),
-        scan_types=scan_types,
+        scan_type=scan_type,
         today=get_date()
     )
 
@@ -79,23 +74,9 @@ def qradar():
     security_data, top_offenses, top_rules = None, None, None
 
     try:
-        security_data = call_qradar_api(security_endpoint)
-        
-        offenses = call_qradar_api(top_offenses_endpoint)
-        if offenses:
-            top_offenses = {}
-            for offense in offenses:
-                top_offenses["offense_name"] = offense["offense_name"]
-                top_offenses["offense_count"] = offense["count"]
-                top_offenses.update()
-
-        rules = call_qradar_api(top_rules_endpoint)
-        if rules:
-            top_rules = {}
-            for rule in rules:
-                top_rules["rule_name"] = rule["rule_name"]
-                top_rules["rule_count"] = rule["count"]
-                top_rules.update() 
+        security_data = call_qradar_api(security_endpoint)        
+        top_offenses = call_qradar_api(top_offenses_endpoint)
+        top_rules = call_qradar_api(top_rules_endpoint)   
 
     except Exception as err:
         msg = "Unable to contact the QRadar API server for health data: {}".format(str(err))

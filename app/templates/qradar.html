@@ -28,10 +28,10 @@
                     <div class="col-lg-4">
                         <div><h4><i class="fa fa-shield"></i> top offenses</h4></div>                    
                         <ul class="list-group">                        
-                            {% for key, value in top_offenses.items() %}               
+                            {% for item in top_offenses %}               
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{ key }}
-                                    <span class="badge badge-primary badge-pill">{{ value }}</span>
+                                    {{ item.offense_name }}
+                                    <span class="badge badge-primary badge-pill">{{ item.count }}</span>
                                 </li>
                             {% endfor %}                                                   
                         </ul>                   
@@ -42,10 +42,10 @@
                     <div class="col-lg-4">
                         <div><h4><i class="fa fa-shield"></i> top rules</h4></div>                    
                         <ul class="list-group">
-                            {% for key, value in top_rules.items() %}
+                            {% for item in top_rules %}
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{ key }}
-                                    <span class="badge badge-primary badge-pill">{{ value }}</span>
+                                    {{ item.rule_name }}
+                                    <span class="badge badge-primary badge-pill">{{ item.count }}</span>
                                 </li>
                             {% endfor %}                             
                         </ul>                   

@@ -16,10 +16,13 @@
                             <label class="col-form-label col-form-label-lg sr-only" for="scan_type">Scan Type:</label>
                             <div class="col-lg-3">                                
                                 <select class="form-control form-control-lg" name="scan_type">
-                                    <option value="" selected>Select Scan Type</option>
-                                    {% for key, value in scan_types.items() %}
-                                        <option value="{{ value }}"{% if value %}selected{% endif %}>{{ key }}</option>
-                                    {% endfor %}
+                                    <option value="" selected>Select Scan Type</option>                                    
+                                    <option value="1" {% if request.form and scan_type == "1" %}selected{% endif %}>Fast Scan</option>
+                                    <option value="2" {% if request.form and scan_type == "2" %}selected{% endif %}>Aggressive Scan</option>
+                                    <option value="3" {% if request.form and scan_type == "3" %}selected{% endif %}>Multi-Port Scan</option>
+                                    <option value="4" {% if request.form and scan_type == "4" %}selected{% endif %}>Service Version Scan</option>
+                                    <option value="5" {% if request.form and scan_type == "5" %}selected{% endif %}>OS Version Scan</option>
+                                    <option value="6" {% if request.form and scan_type == "6" %}selected{% endif %}>Vulnerability Scan</option>                                    
                                 </select>                                
                             </div>
                         </div>                        
