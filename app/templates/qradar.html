@@ -1,0 +1,68 @@
+{% extends "_layout.html" %}
+{% block title %}ebridge IBM QRadar Health Data{% endblock %}
+    
+
+    {% block page_header %}
+        {% block page_header_content %}
+            <h2>qradar health</h2>
+        {% endblock %}
+    {% endblock %}
+    
+    {% block content %}
+        {% block body_content %}
+            {% if security_data %}
+                <div class="col-lg-4">
+                    <div><h4><i class="fa fa-shield"></i> security data</h4></div>                    
+                    <ul class="list-group">
+                        {% for key, value in security_data.items() %}               
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ key }}
+                                <span class="badge badge-primary badge-pill">{{ value }}</span>
+                            </li>
+                        {% endfor %}                             
+                    </ul>                    
+                </div>
+            
+            
+                {% if top_offenses %}
+                    <div class="col-lg-4">
+                        <div><h4><i class="fa fa-shield"></i> top offenses</h4></div>                    
+                        <ul class="list-group">                        
+                            {% for key, value in top_offenses.items() %}               
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ key }}
+                                    <span class="badge badge-primary badge-pill">{{ value }}</span>
+                                </li>
+                            {% endfor %}                                                   
+                        </ul>                   
+                    </div>
+                {% endif %}
+
+                {% if top_rules %}
+                    <div class="col-lg-4">
+                        <div><h4><i class="fa fa-shield"></i> top rules</h4></div>                    
+                        <ul class="list-group">
+                            {% for key, value in top_rules.items() %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ key }}
+                                    <span class="badge badge-primary badge-pill">{{ value }}</span>
+                                </li>
+                            {% endfor %}                             
+                        </ul>                   
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="alert alert-dismissible alert-info">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h5 class="alert-heading"><i class="fa fa-warning"></i> Warning!</h5>
+                    <p class="mb-0">The QRadar REST API server did not respond with health data.</p>
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endblock %}
+
+    {% block footer %}
+        {% block footer_content %}
+            <div class="text-center text-primary">{{ today }}</div>
+        {% endblock %}
+    {% endblock %}
