@@ -9,8 +9,8 @@ BASE_URL = "https://my.api.mockaroo.com/"
 hdrs = {"content-type": "application/json", "X-API-Key": "f6f21d00"}
 
 
-@app.route("/")
-@app.route("/index")
+@app.route("/", methods=["GET"])
+@app.route("/index", methods=["GET", "POST"])
 def index():
     """ 
     endpoint for index
