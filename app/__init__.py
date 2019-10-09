@@ -5,7 +5,7 @@ import re
 from flask import Flask
 from flask import send_from_directory, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from qpylib import qpylib
+from .qpylib import qpylib
 
 # define flask app
 app = Flask(__name__, static_folder="static", template_folder="templates")

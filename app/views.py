@@ -1,6 +1,8 @@
-from app import app
+from app import app, db
 from flask import render_template, request, Response, redirect, url_for, flash
 from datetime import datetime, timedelta
+from sqlalchemy import exc
+from .models import Scan, ScanType, ScanResults
 import subprocess
 import ipaddress
 import requests
@@ -33,6 +35,7 @@ def nmap():
     hosts = None
     ip = None
     scan_type = None
+    scan_types = None
 
     if request.method == "POST":
         ip = request.form["ip_network"]
@@ -42,8 +45,13 @@ def nmap():
             cidr = ipaddress.IPv4Network(ip)
             
             # set hosts to our network scan response
-            hosts = scan_network(cidr)
+            hosts = scan_network(cidr, scan_type)
             total_hosts = len(hosts)/2 - 2
+
+        except ipaddress.NetmaskValueError as nmve:
+            msg = "The network mask provided is not a valid subnet mask: {}".format(str(nmve))
+            flash(msg, category="danger")
+            return redirect(url_for("nmap"))
 
         except ipaddress.AddressValueError as err:
             # log the error
@@ -56,6 +64,7 @@ def nmap():
         ip=ip,
         hosts=hosts,
         total_hosts=int(total_hosts),
+        scan_types=get_scan_types(),
         scan_type=scan_type,
         today=get_date()
     )
@@ -125,8 +134,7 @@ def call_qradar_api(endpoint):
     return resp
 
 
-
-def scan_network(cidr):
+def scan_network(cidr, cmd):
     """
     Scan the CIDR using subprocess check_output
     :param CIDR network
@@ -134,10 +142,11 @@ def scan_network(cidr):
     """
     hosts = None
     network = str(cidr)
+    _type = str(cmd)
 
     try:
         data = subprocess.check_output(
-            ["/usr/local/bin/nmap", "-sP", "-n", network],
+            ["/usr/local/bin/nmap", _type, "-n", network],
             stderr=subprocess.STDOUT
         )
         # set hosts to a list split on new line
@@ -147,3 +156,25 @@ def scan_network(cidr):
         print(str(err))
 
     return hosts
+
+
+def get_scan_types():
+    """ 
+    Generate the scan types list from the database
+    :return list
+    """
+    scan_types = None
+
+    try:
+        scan_types = db.session.query(ScanType).filter(
+            ScanType.scan_type_active == 1
+        ).order_by(
+            ScanType.id.asc()
+        ).all()
+
+    except exc.SQLAlchemyError as err:
+        msg = str(err)
+        flash(msg, category="danger")
+        return redirect(url_for("nmap"))
+
+    return scan_types
